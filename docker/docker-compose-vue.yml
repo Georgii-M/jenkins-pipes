@@ -1,0 +1,30 @@
+version: '3'
+services:
+    postgres_db:
+        image: postgres
+        networks:
+            - custom_net
+        volumes:
+            - ./pg_db:/var/lib/postgresql/data
+        environment:
+            - POSTGRES_USER=testuser1
+            - POSTGRES_PASSWORD=testpass1
+
+    mongo_db:
+        image: mongo
+        volumes:
+            - ./mongo_db:/data/db
+        networks:
+            - custom_net
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=testuser2
+            - MONGO_INITDB_ROOT_PASSWORD=testpass2
+
+    asp_net:
+        image: testappfordocker
+        networks:
+            - custom_net
+
+networks:
+        custom_net:
+                external: true
